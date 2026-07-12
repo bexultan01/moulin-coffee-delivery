@@ -25,7 +25,7 @@ export const MENU = [
 export const DELIVERY_FEE = 800;
 export const FREE_DELIVERY_OVER = 8000;
 export const SHOP_NAME = "moulin coffee";
-export const SHOP_ADDRESS = "ул. Абая 12, Алматы";
+export const SHOP_ADDRESS = "Рыскулова 178";
 
 export function getAllItems() {
   return MENU.flatMap((section) => section.items);

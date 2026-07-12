@@ -1,10 +1,10 @@
-import { Caveat, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Manrope, Inter } from "next/font/google";
 import "./globals.css";
 
-const caveat = Caveat({
+const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
-  weight: ["600", "700"],
-  variable: "--font-chalk",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -12,13 +12,6 @@ const inter = Inter({
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500", "600"],
   variable: "--font-body",
-  display: "swap",
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600"],
-  variable: "--font-mono",
   display: "swap",
 });
 
@@ -36,7 +29,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
-      <body className={`${caveat.variable} ${inter.variable} ${plexMono.variable}`}>
+      <body className={`${manrope.variable} ${inter.variable}`}>
         {children}
       </body>
     </html>
