@@ -80,6 +80,20 @@ a:focus-visible {
   position: relative;
 }
 
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brandLogo {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
 .headerEyebrow {
   font-family: var(--font-mono);
   font-size: 11px;

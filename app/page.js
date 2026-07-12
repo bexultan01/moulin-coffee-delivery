@@ -107,8 +107,13 @@ export default function Home() {
     <div className={"page"}>
       <header className={"header"}>
         <div className={"chalkDust"} aria-hidden="true" />
-        <p className={"headerEyebrow"}>меню на сегодня</p>
-        <h1 className={"headerTitle"}>{SHOP_NAME}</h1>
+        <div className="brandRow">
+          <img src="/moulin-logo.jpg" alt="moulin coffee logo" className="brandLogo" />
+          <div>
+            <p className={"headerEyebrow"}>меню на сегодня</p>
+            <h1 className={"headerTitle"}>{SHOP_NAME}</h1>
+          </div>
+        </div>
         <p className={"headerSub"}>{SHOP_ADDRESS} · доставка от {formatMoney(DELIVERY_FEE)} ₸, бесплатно от {formatMoney(FREE_DELIVERY_OVER)} ₸</p>
       </header>
 

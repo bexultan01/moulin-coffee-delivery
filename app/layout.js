@@ -23,8 +23,8 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata = {
-  title: "Кружка · Заказ с доставкой",
-  description: "Меню и заказ доставки кофейни",
+  title: "moulin coffee · Заказ с доставкой",
+  description: "Меню и заказ доставки кофейни moulin coffee",
 };
 
 export const viewport = {
