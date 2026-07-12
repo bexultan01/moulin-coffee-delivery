@@ -443,11 +443,6 @@ a:focus-visible {
   color: #fff;
 }
 
-.sendBtnWhatsapp {
-  background: #3fbb5c;
-  color: #fff;
-}
-
 .sendBtn:disabled {
   opacity: 0.55;
 }

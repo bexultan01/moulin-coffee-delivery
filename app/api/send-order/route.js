@@ -3,7 +3,7 @@ import { getItem, DELIVERY_FEE, FREE_DELIVERY_OVER } from "../../menu-data";
 
 export async function POST(request) {
   const body = await request.json();
-  const { cart, address, phone } = body || {};
+  const { cart, address, phone, orderNo } = body || {};
 
   if (!cart || typeof cart !== "object" || Object.keys(cart).length === 0) {
     return NextResponse.json({ error: "Корзина пуста" }, { status: 400 });
@@ -45,7 +45,7 @@ export async function POST(request) {
   const total = subtotal + delivery;
 
   const text = [
-    "🧾 Новый заказ с сайта",
+    `🧾 Новый заказ №${orderNo || "—"} с сайта`,
     "",
     ...lines,
     "",

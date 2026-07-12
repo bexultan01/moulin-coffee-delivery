@@ -63,21 +63,6 @@ export default function Home() {
     };
   }, [sheetOpen]);
 
-  function buildReceiptText() {
-    const lines = cartLines.map((l) => `${l.item.name} ×${l.qty} — ${l.item.price * l.qty} ₸`);
-    return [
-      `Заказ №${orderNo} — ${SHOP_NAME}`,
-      "",
-      ...lines,
-      "",
-      `Доставка: ${delivery === 0 ? "бесплатно" : delivery + " ₸"}`,
-      `Итого: ${total} ₸`,
-      "",
-      `Адрес: ${address.trim() || "—"}`,
-      `Телефон: ${phone.trim() || "—"}`,
-    ].join("\n");
-  }
-
   async function sendTelegram() {
     if (itemCount === 0) {
       setStatus({ type: "error", message: "Выберите хотя бы одну позицию." });
@@ -99,7 +84,7 @@ export default function Home() {
       const res = await fetch("/api/send-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cart, address, phone }),
+        body: JSON.stringify({ cart, address, phone, orderNo }),
       });
       const data = await res.json();
 
@@ -116,28 +101,6 @@ export default function Home() {
     } finally {
       setSending(false);
     }
-  }
-
-  function sendWhatsapp() {
-    if (itemCount === 0) {
-      setStatus({ type: "error", message: "Выберите хотя бы одну позицию." });
-      return;
-    }
-    if (!address.trim()) {
-      setStatus({ type: "error", message: "Укажите адрес доставки." });
-      return;
-    }
-    if (!phone.trim()) {
-      setStatus({ type: "error", message: "Укажите телефон для связи." });
-      return;
-    }
-
-    const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
-    const text = encodeURIComponent(buildReceiptText());
-    const url = number
-      ? `https://wa.me/${number}?text=${text}`
-      : `https://wa.me/?text=${text}`;
-    window.open(url, "_blank");
   }
 
   return (
@@ -273,14 +236,7 @@ export default function Home() {
                     onClick={sendTelegram}
                     disabled={sending}
                   >
-                    {sending ? "Отправляем…" : "Отправить в Telegram"}
-                  </button>
-                  <button
-                    type="button"
-                    className="sendBtn sendBtnWhatsapp"
-                    onClick={sendWhatsapp}
-                  >
-                    Отправить в WhatsApp
+                    {sending ? "Отправляем…" : "Отправить заказ"}
                   </button>
                 </div>
 
