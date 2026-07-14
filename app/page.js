@@ -1,7 +1,13 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import { MENU, DELIVERY_FEE, FREE_DELIVERY_OVER, SHOP_NAME, SHOP_ADDRESS, getItem } from "./menu-data";
+import {
+  MENU as FALLBACK_MENU,
+  DELIVERY_FEE as FALLBACK_DELIVERY_FEE,
+  FREE_DELIVERY_OVER as FALLBACK_FREE_DELIVERY_OVER,
+  SHOP_NAME as FALLBACK_SHOP_NAME,
+  SHOP_ADDRESS as FALLBACK_SHOP_ADDRESS,
+} from "./menu-data";
 
 function formatMoney(n) {
   return new Intl.NumberFormat("ru-RU").format(Math.round(n));
@@ -15,17 +21,49 @@ export default function Home() {
   const [status, setStatus] = useState({ type: null, message: "" });
   const [sending, setSending] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
+  const [menu, setMenu] = useState({
+    shopName: FALLBACK_SHOP_NAME,
+    shopAddress: FALLBACK_SHOP_ADDRESS,
+    deliveryFee: FALLBACK_DELIVERY_FEE,
+    freeDeliveryOver: FALLBACK_FREE_DELIVERY_OVER,
+    sections: FALLBACK_MENU,
+  });
   const [orderNo] = useState(() => Math.floor(100 + Math.random() * 900));
+
+  useEffect(() => {
+    async function loadMenu() {
+      try {
+        const res = await fetch("/api/menu");
+        if (!res.ok) return;
+        const data = await res.json();
+        setMenu({
+          shopName: data.shopName || FALLBACK_SHOP_NAME,
+          shopAddress: data.shopAddress || FALLBACK_SHOP_ADDRESS,
+          deliveryFee: Number(data.deliveryFee ?? FALLBACK_DELIVERY_FEE),
+          freeDeliveryOver: Number(data.freeDeliveryOver ?? FALLBACK_FREE_DELIVERY_OVER),
+          sections: Array.isArray(data.sections) ? data.sections : FALLBACK_MENU,
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    loadMenu();
+  }, []);
+
+  const getItemById = (id) => {
+    return menu.sections.flatMap((section) => section.items).find((item) => item.id === id);
+  };
 
   const cartLines = useMemo(() => {
     return Object.entries(cart)
-      .map(([id, qty]) => ({ item: getItem(id), qty }))
+      .map(([id, qty]) => ({ item: getItemById(id), qty }))
       .filter((line) => line.item && line.qty > 0);
-  }, [cart]);
+  }, [cart, menu.sections]);
 
   const subtotal = cartLines.reduce((sum, l) => sum + l.item.price * l.qty, 0);
   const itemCount = cartLines.reduce((sum, l) => sum + l.qty, 0);
-  const delivery = subtotal === 0 ? 0 : subtotal >= FREE_DELIVERY_OVER ? 0 : DELIVERY_FEE;
+  const delivery = subtotal === 0 ? 0 : subtotal >= menu.freeDeliveryOver ? 0 : menu.deliveryFee;
   const total = subtotal + delivery;
 
   function changeQty(id, delta) {
@@ -111,18 +149,19 @@ export default function Home() {
           <img src="/moulin-logo.jpg" alt="moulin coffee logo" className="brandLogo" />
           <div>
             <p className={"headerEyebrow"}>меню на сегодня</p>
-            <h1 className={"headerTitle"}>{SHOP_NAME}</h1>
+            <h1 className={"headerTitle"}>{menu.shopName}</h1>
           </div>
         </div>
-        <p className={"headerSub"}>{SHOP_ADDRESS} · доставка от {formatMoney(DELIVERY_FEE)} ₸, бесплатно от {formatMoney(FREE_DELIVERY_OVER)} ₸</p>
+        <p className={"headerSub"}>{menu.shopAddress} · доставка от {formatMoney(menu.deliveryFee)} ₸, бесплатно от {formatMoney(menu.freeDeliveryOver)} ₸</p>
         <a href="/admin" className="adminLink">Войти в админку</a>
       </header>
 
       <main className={"menuSection"}>
-        {MENU.map((section) => (
+        {menu.sections.map((section) => (
           <section key={section.category}>
             <h2 className={"categoryLabel"}>{section.category}</h2>
             {section.items.map((item) => {
+              if (item.visible === false) return null;
               const qty = cart[item.id] || 0;
               return (
                 <div className={"item"} key={item.id}>
@@ -130,7 +169,10 @@ export default function Home() {
                     <img src={item.image || "/images/espresso.svg"} alt={item.name} className="itemImage" />
                   </div>
                   <div className={"itemInfo"}>
-                    <p className={"itemName"}>{item.name}</p>
+                    <div className={"itemTitleRow"}>
+                      <p className={"itemName"}>{item.name}</p>
+                      {item.isNew ? <span className="newBadge">Новинка</span> : null}
+                    </div>
                     <p className={"itemPrice"}>{formatMoney(item.price)} ₸</p>
                   </div>
                   <div className={"stepper"}>
@@ -189,7 +231,7 @@ export default function Home() {
             <>
               <div className={"receiptHeader"}>
                 <p className={"receiptTitle"}>Чек №{orderNo}</p>
-                <p className={"receiptMeta"}>{SHOP_NAME} · {new Date().toLocaleDateString("ru-RU")}</p>
+                <p className={"receiptMeta"}>{menu.shopName} · {new Date().toLocaleDateString("ru-RU")}</p>
               </div>
 
               <div className={"receiptLines"}>
@@ -269,7 +311,7 @@ export default function Home() {
               <div className={"confirmMark"}>✅</div>
               <p className={"confirmTitle"}>Заказ отправлен</p>
               <p className={"confirmText"}>
-                Заказ №{orderNo} получен кофейней «{SHOP_NAME}».
+                Заказ №{orderNo} получен кофейней «{menu.shopName}».
                 Мы свяжемся с вами по указанному телефону для подтверждения.
               </p>
               <button
