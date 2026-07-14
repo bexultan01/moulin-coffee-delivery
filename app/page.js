@@ -172,8 +172,7 @@ export default function Home() {
       <main className={"menuSection"} id="menu">
         <div className="menuIntro">
           <p className="menuIntroEyebrow">Меню</p>
-          <h2 className="menuIntroTitle">Избранные позиции для вашего стола</h2>
-          <p className="menuIntroText">Кофе, авторские напитки, горячая и холодная кухня — собранные под атмосферу премиального сервиса.</p>
+          <h2 className="menuIntroTitle">Выберите любимые позиции</h2>
         </div>
 
         <div className="categoryFilters" role="tablist" aria-label="Категории меню">
@@ -248,6 +247,26 @@ export default function Home() {
           Доставка →
         </button>
       </div>
+
+      <footer className="footerSection">
+        <div className="footerBlock">
+          <h4>Меню</h4>
+          <a href="#menu">Категории</a>
+        </div>
+        <div className="footerBlock">
+          <h4>Доставка</h4>
+          <a href="#" onClick={(e) => { e.preventDefault(); openSheet(); }}>Оформить заказ</a>
+        </div>
+        <div className="footerBlock">
+          <h4>admin</h4>
+          <a href="/admin">Войти</a>
+        </div>
+        <div className="footerBlock">
+          <h4>Контакты</h4>
+          <span>{menu.shopAddress}</span>
+          <span>+7 700 000 00 00</span>
+        </div>
+      </footer>
 
       <div
         className={`overlay ${sheetOpen ? "overlayVisible" : ""}`}
