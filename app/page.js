@@ -22,6 +22,7 @@ export default function Home() {
   const [sending, setSending] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [activeCategory, setActiveCategory] = useState("Все");
+  const [viewMode, setViewMode] = useState("list");
   const [menu, setMenu] = useState({
     shopName: FALLBACK_SHOP_NAME,
     shopAddress: FALLBACK_SHOP_ADDRESS,
@@ -164,6 +165,7 @@ export default function Home() {
         </div>
         <p className={"headerSub"}>{menu.shopAddress}</p>
         <div className="heroActions">
+          <a href="#menu" className="heroLink">Меню</a>
           <button type="button" className="heroPrimaryBtn" onClick={openSheet}>Доставка</button>
           <a href="/admin" className="adminLink">admin</a>
         </div>
@@ -175,17 +177,23 @@ export default function Home() {
           <h2 className="menuIntroTitle">Выберите любимые позиции</h2>
         </div>
 
-        <div className="categoryFilters" role="tablist" aria-label="Категории меню">
-          {categoryList.map((category) => (
-            <button
-              key={category}
-              type="button"
-              className={`filterChip ${activeCategory === category ? "filterChipActive" : ""}`}
-              onClick={() => setActiveCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
+        <div className="toolbarRow">
+          <div className="categoryFilters" role="tablist" aria-label="Категории меню">
+            {categoryList.map((category) => (
+              <button
+                key={category}
+                type="button"
+                className={`filterChip ${activeCategory === category ? "filterChipActive" : ""}`}
+                onClick={() => setActiveCategory(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+          <div className="viewToggle">
+            <button type="button" className={`viewBtn ${viewMode === "list" ? "viewBtnActive" : ""}`} onClick={() => setViewMode("list")}>Список</button>
+            <button type="button" className={`viewBtn ${viewMode === "table" ? "viewBtnActive" : ""}`} onClick={() => setViewMode("table")}>Таблица</button>
+          </div>
         </div>
 
         {visibleSections.map((section) => (
@@ -195,7 +203,7 @@ export default function Home() {
               if (item.visible === false) return null;
               const qty = cart[item.id] || 0;
               return (
-                <div className={"itemCard"} key={item.id}>
+                <div className={viewMode === "table" ? "itemRow" : "itemCard"} key={item.id}>
                   <div className="itemMedia">
                     <img src={item.image || "/images/espresso.svg"} alt={item.name} className="itemImage" />
                   </div>

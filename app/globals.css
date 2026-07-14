@@ -139,6 +139,13 @@ a:focus-visible {
   font-weight: 700;
 }
 
+.heroLink {
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
 .adminLink {
   display: inline-flex;
   align-items: center;
@@ -229,12 +236,38 @@ a:focus-visible {
   text-decoration: underline;
 }
 
+.toolbarRow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
 .categoryFilters {
   display: flex;
   gap: 8px;
   overflow-x: auto;
   padding-bottom: 6px;
-  margin: 0 0 1rem;
+}
+
+.viewToggle {
+  display: flex;
+  gap: 8px;
+}
+
+.viewBtn {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--chalk-dim);
+  border-radius: 999px;
+  padding: 0.45rem 0.75rem;
+  font-size: 12px;
+}
+
+.viewBtnActive {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
 }
 
 .filterChip {
@@ -276,6 +309,15 @@ a:focus-visible {
 .itemCard {
   display: flex;
   align-items: stretch;
+  gap: 12px;
+  padding: 0.8rem 0;
+  border-top: 1px solid rgba(18, 33, 63, 0.06);
+}
+
+.itemRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
   padding: 0.8rem 0;
   border-top: 1px solid rgba(18, 33, 63, 0.06);
