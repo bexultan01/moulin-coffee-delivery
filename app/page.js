@@ -158,14 +158,14 @@ export default function Home() {
         <div className="brandRow">
           <img src="/moulin-logo.jpg" alt="moulin coffee logo" className="brandLogo" />
           <div>
-            <p className={"headerEyebrow"}>премиальная кофейня и кухня</p>
+            <p className={"headerEyebrow"}>кофейня и кухня</p>
             <h1 className={"headerTitle"}>{menu.shopName}</h1>
           </div>
         </div>
-        <p className={"headerSub"}>{menu.shopAddress} · доставка от {formatMoney(menu.deliveryFee)} ₸, бесплатно от {formatMoney(menu.freeDeliveryOver)} ₸</p>
+        <p className={"headerSub"}>{menu.shopAddress}</p>
         <div className="heroActions">
           <button type="button" className="heroPrimaryBtn" onClick={openSheet}>Доставка</button>
-          <a href="/admin" className="adminLink">Админка</a>
+          <a href="/admin" className="adminLink">admin</a>
         </div>
       </header>
 
@@ -209,7 +209,7 @@ export default function Home() {
                       <p className={"itemPrice"}>{formatMoney(item.price)} ₸</p>
                     </div>
                     <div className={"itemMeta"}>
-                      {item.isNew ? <span className="newBadge">Новинка</span> : <span className="newBadge muted">Премиум</span>}
+                      {item.isNew ? <span className="newBadge">Новинка</span> : null}
                       <div className={"stepper"}>
                         <button
                           type="button"

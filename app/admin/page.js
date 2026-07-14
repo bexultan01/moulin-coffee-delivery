@@ -121,7 +121,7 @@ export default function AdminPage() {
   if (!loggedIn) {
     return (
       <main style={{ maxWidth: 420, margin: "40px auto", padding: 24 }}>
-        <h1>Админка moulin coffee</h1>
+        <h1>admin moulin coffee</h1>
         <form onSubmit={login}>
           <input
             type="password"
