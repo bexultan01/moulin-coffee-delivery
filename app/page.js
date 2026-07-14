@@ -115,6 +115,7 @@ export default function Home() {
           </div>
         </div>
         <p className={"headerSub"}>{SHOP_ADDRESS} · доставка от {formatMoney(DELIVERY_FEE)} ₸, бесплатно от {formatMoney(FREE_DELIVERY_OVER)} ₸</p>
+        <a href="/admin" className="adminLink">Войти в админку</a>
       </header>
 
       <main className={"menuSection"}>

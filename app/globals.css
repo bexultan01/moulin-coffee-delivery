@@ -115,8 +115,23 @@ a:focus-visible {
 .headerSub {
   font-size: 14px;
   color: var(--chalk-dim);
-  margin: 0;
+  margin: 0 0 10px;
   line-height: 1.5;
+}
+
+.adminLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  margin-top: 2px;
+}
+
+.adminLink:hover {
+  text-decoration: underline;
 }
 
 .chalkDust {
