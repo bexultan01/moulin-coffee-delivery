@@ -21,6 +21,7 @@ export default function Home() {
   const [status, setStatus] = useState({ type: null, message: "" });
   const [sending, setSending] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("Все");
   const [menu, setMenu] = useState({
     shopName: FALLBACK_SHOP_NAME,
     shopAddress: FALLBACK_SHOP_ADDRESS,
@@ -65,6 +66,15 @@ export default function Home() {
   const itemCount = cartLines.reduce((sum, l) => sum + l.qty, 0);
   const delivery = subtotal === 0 ? 0 : subtotal >= menu.freeDeliveryOver ? 0 : menu.deliveryFee;
   const total = subtotal + delivery;
+  const categoryList = useMemo(() => {
+    const categories = (menu.sections || []).map((section) => section.category);
+    return ["Все", ...Array.from(new Set(categories))];
+  }, [menu.sections]);
+  const visibleSections = useMemo(() => {
+    const sections = (menu.sections || []).filter((section) => (section.items || []).some((item) => item.visible !== false));
+    if (activeCategory === "Все") return sections;
+    return sections.filter((section) => section.category === activeCategory);
+  }, [activeCategory, menu.sections]);
 
   function changeQty(id, delta) {
     setCart((prev) => {
@@ -148,52 +158,79 @@ export default function Home() {
         <div className="brandRow">
           <img src="/moulin-logo.jpg" alt="moulin coffee logo" className="brandLogo" />
           <div>
-            <p className={"headerEyebrow"}>меню на сегодня</p>
+            <p className={"headerEyebrow"}>премиальная кофейня и кухня</p>
             <h1 className={"headerTitle"}>{menu.shopName}</h1>
           </div>
         </div>
         <p className={"headerSub"}>{menu.shopAddress} · доставка от {formatMoney(menu.deliveryFee)} ₸, бесплатно от {formatMoney(menu.freeDeliveryOver)} ₸</p>
-        <a href="/admin" className="adminLink">Войти в админку</a>
+        <div className="heroActions">
+          <button type="button" className="heroPrimaryBtn" onClick={openSheet}>Доставка</button>
+          <a href="/admin" className="adminLink">Админка</a>
+        </div>
       </header>
 
-      <main className={"menuSection"}>
-        {menu.sections.map((section) => (
-          <section key={section.category}>
-            <h2 className={"categoryLabel"}>{section.category}</h2>
+      <main className={"menuSection"} id="menu">
+        <div className="menuIntro">
+          <p className="menuIntroEyebrow">Меню</p>
+          <h2 className="menuIntroTitle">Избранные позиции для вашего стола</h2>
+          <p className="menuIntroText">Кофе, авторские напитки, горячая и холодная кухня — собранные под атмосферу премиального сервиса.</p>
+        </div>
+
+        <div className="categoryFilters" role="tablist" aria-label="Категории меню">
+          {categoryList.map((category) => (
+            <button
+              key={category}
+              type="button"
+              className={`filterChip ${activeCategory === category ? "filterChipActive" : ""}`}
+              onClick={() => setActiveCategory(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {visibleSections.map((section) => (
+          <section key={section.category} className="sectionCard">
+            <h3 className={"categoryLabel"}>{section.category}</h3>
             {section.items.map((item) => {
               if (item.visible === false) return null;
               const qty = cart[item.id] || 0;
               return (
-                <div className={"item"} key={item.id}>
+                <div className={"itemCard"} key={item.id}>
                   <div className="itemMedia">
                     <img src={item.image || "/images/espresso.svg"} alt={item.name} className="itemImage" />
                   </div>
                   <div className={"itemInfo"}>
-                    <div className={"itemTitleRow"}>
-                      <p className={"itemName"}>{item.name}</p>
-                      {item.isNew ? <span className="newBadge">Новинка</span> : null}
+                    <div className={"itemTop"}>
+                      <div>
+                        <p className={"itemName"}>{item.name}</p>
+                        {item.description ? <p className={"itemDescription"}>{item.description}</p> : null}
+                      </div>
+                      <p className={"itemPrice"}>{formatMoney(item.price)} ₸</p>
                     </div>
-                    <p className={"itemPrice"}>{formatMoney(item.price)} ₸</p>
-                  </div>
-                  <div className={"stepper"}>
-                    <button
-                      type="button"
-                      className={"stepBtn"}
-                      onClick={() => changeQty(item.id, -1)}
-                      disabled={qty === 0}
-                      aria-label={`Убрать ${item.name}`}
-                    >
-                      −
-                    </button>
-                    <span className={"stepQty"}>{qty}</span>
-                    <button
-                      type="button"
-                      className={`stepBtn ${qty > 0 ? "stepBtnActive" : ""}`}
-                      onClick={() => changeQty(item.id, 1)}
-                      aria-label={`Добавить ${item.name}`}
-                    >
-                      +
-                    </button>
+                    <div className={"itemMeta"}>
+                      {item.isNew ? <span className="newBadge">Новинка</span> : <span className="newBadge muted">Премиум</span>}
+                      <div className={"stepper"}>
+                        <button
+                          type="button"
+                          className={"stepBtn"}
+                          onClick={() => changeQty(item.id, -1)}
+                          disabled={qty === 0}
+                          aria-label={`Убрать ${item.name}`}
+                        >
+                          −
+                        </button>
+                        <span className={"stepQty"}>{qty}</span>
+                        <button
+                          type="button"
+                          className={`stepBtn ${qty > 0 ? "stepBtnActive" : ""}`}
+                          onClick={() => changeQty(item.id, 1)}
+                          aria-label={`Добавить ${item.name}`}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
@@ -204,11 +241,11 @@ export default function Home() {
 
       <div className={`cartBar ${itemCount === 0 ? "cartBarHidden" : ""}`}>
         <div className={"cartBarInfo"}>
-          {itemCount} {itemCount === 1 ? "позиция" : "позиции"}
+          <span>{itemCount} {itemCount === 1 ? "позиция" : "позиции"}</span>
           <div className={"cartBarTotal"}>{formatMoney(total)} ₸</div>
         </div>
         <button type="button" className={"cartBarBtn"} onClick={openSheet}>
-          Оформить →
+          Доставка →
         </button>
       </div>
 

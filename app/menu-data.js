@@ -5,18 +5,32 @@ export const SHOP_ADDRESS = "Рыскулова 178";
 
 export const MENU = [
   {
-    category: "Напитки",
+    category: "Холодные напитки",
     items: [
-      { id: "esp", name: "Эспрессо", price: 900, image: "/images/espresso.svg" },
-      { id: "ame", name: "Американо", price: 1000, image: "/images/americano.svg" },
-      { id: "cap", name: "Капучино", price: 1300, image: "/images/cappuccino.svg" },
+      { id: "ice1", name: "Iced Signature", price: 1800, description: "Кофе, ваниль, ледяной крем", image: "/images/americano.jpg" },
+      { id: "tea1", name: "Фруктовый чай", price: 1400, description: "Черный чай, цитрус, мята", image: "/images/espresso.jpg" },
     ],
   },
   {
-    category: "Еда",
+    category: "Горячие напитки",
     items: [
-      { id: "cro", name: "Круассан классический", price: 1200, image: "/images/croissant.svg" },
-      { id: "san", name: "Сэндвич с курицей", price: 1900, image: "/images/sandwich.svg" },
+      { id: "hot1", name: "Горячий шоколад", price: 2000, description: "Натуральный шоколад, сливки", image: "/images/cappuccino.jpg" },
+      { id: "tea2", name: "Чай с бергамотом", price: 1300, description: "Ароматный черный чай", image: "/images/espresso.jpg" },
+    ],
+  },
+  {
+    category: "Кофе",
+    items: [
+      { id: "esp", name: "Эспрессо", price: 900, description: "Классический двойной экстракт", image: "/images/espresso.jpg", isNew: true },
+      { id: "cap", name: "Капучино", price: 1300, description: "Сливочное молоко, бариста-эспрессо", image: "/images/cappuccino.jpg" },
+      { id: "ame", name: "Американо", price: 1000, description: "Нежный вкус с мягкой кислотой", image: "/images/americano.jpg" },
+    ],
+  },
+  {
+    category: "Кухня",
+    items: [
+      { id: "cro", name: "Круассан с лососем", price: 2200, description: "Сливочный сыр, лосось, зелень", image: "/images/croissant.jpg" },
+      { id: "san", name: "Сэндвич с курицей", price: 1900, description: "Птица, томаты, сыр", image: "/images/sandwich.jpg" },
     ],
   },
 ];

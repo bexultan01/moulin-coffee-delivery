@@ -1,16 +1,17 @@
 :root {
-  --bg: #f5efe7;
-  --bg-elevated: #fffdf9;
-  --chalk: #2f2117;
-  --chalk-dim: #786456;
-  --accent: #8a5a34;
-  --accent-soft: rgba(138, 90, 52, 0.12);
-  --line: rgba(47, 33, 23, 0.1);
-  --receipt-paper: #fffdf8;
-  --receipt-ink: #2c2119;
-  --receipt-ink-dim: #7a6754;
+  --bg: #f4f7ff;
+  --bg-elevated: #ffffff;
+  --chalk: #12213f;
+  --chalk-dim: #5e6f95;
+  --accent: #143d79;
+  --accent-soft: rgba(20, 61, 121, 0.12);
+  --line: rgba(18, 33, 63, 0.1);
+  --receipt-paper: #f8fbff;
+  --receipt-ink: #12213f;
+  --receipt-ink-dim: #61708f;
   --danger: #c45b4d;
   --success: #447856;
+  --luxury: linear-gradient(135deg, #143d79 0%, #0f2f5f 100%);
 
   --font-display: "Manrope", sans-serif;
   --font-body: "Inter", -apple-system, sans-serif;
@@ -29,8 +30,8 @@ body {
 
 body {
   background:
-    radial-gradient(circle at top left, rgba(138, 90, 52, 0.08), transparent 28%),
-    linear-gradient(180deg, #faf5ee 0%, #f5efe7 100%);
+    radial-gradient(circle at top left, rgba(20, 61, 121, 0.1), transparent 28%),
+    linear-gradient(180deg, #f7faff 0%, #eef3ff 100%);
   color: var(--chalk);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -59,13 +60,13 @@ a:focus-visible {
 /* ---------- layout shell ---------- */
 
 .page {
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-bottom: 96px;
+  padding-bottom: 112px;
 }
 
 /* ---------- header ---------- */
@@ -74,6 +75,10 @@ a:focus-visible {
   padding: 1.75rem 1.5rem 1.35rem;
   border-bottom: 1px solid var(--line);
   position: relative;
+  background: var(--luxury);
+  color: #fff;
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 12px 32px rgba(20, 61, 121, 0.22);
 }
 
 .brandRow {
@@ -83,12 +88,12 @@ a:focus-visible {
 }
 
 .brandLogo {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
   object-fit: cover;
   flex-shrink: 0;
-  border: 1px solid var(--line);
+  border: 2px solid rgba(255, 255, 255, 0.22);
   background: #fff;
 }
 
@@ -97,7 +102,7 @@ a:focus-visible {
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--chalk-dim);
+  color: rgba(255,255,255,0.82);
   margin: 0 0 6px;
 }
 
@@ -107,16 +112,31 @@ a:focus-visible {
   font-size: 2.1rem;
   line-height: 1;
   margin: 0 0 8px;
-  color: var(--accent);
-  text-shadow: none;
+  color: #fff;
   letter-spacing: -0.04em;
 }
 
 .headerSub {
   font-size: 14px;
-  color: var(--chalk-dim);
-  margin: 0 0 10px;
+  color: rgba(255,255,255,0.84);
+  margin: 0 0 12px;
   line-height: 1.5;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.heroPrimaryBtn {
+  background: #fff;
+  color: var(--accent);
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  font-weight: 700;
 }
 
 .adminLink {
@@ -125,7 +145,7 @@ a:focus-visible {
   gap: 6px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--accent);
+  color: #fff;
   text-decoration: none;
   margin-top: 2px;
 }
@@ -149,32 +169,94 @@ a:focus-visible {
   padding: 1.25rem 1.5rem 0.5rem;
 }
 
+.menuIntro {
+  margin-bottom: 1rem;
+}
+
+.menuIntroEyebrow {
+  margin: 0 0 4px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.menuIntroTitle {
+  margin: 0 0 6px;
+  font-size: 1.35rem;
+  font-family: var(--font-display);
+  color: var(--chalk);
+}
+
+.menuIntroText {
+  margin: 0;
+  font-size: 13px;
+  color: var(--chalk-dim);
+  line-height: 1.55;
+}
+
+.categoryFilters {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin: 0 0 1rem;
+}
+
+.filterChip {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--chalk-dim);
+  border-radius: 999px;
+  padding: 0.55rem 0.8rem;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.filterChipActive {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.sectionCard {
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(20, 61, 121, 0.08);
+  border-radius: 20px;
+  padding: 0.95rem;
+  box-shadow: 0 10px 24px rgba(18, 33, 63, 0.06);
+  margin-bottom: 0.9rem;
+}
+
 .categoryLabel {
   font-family: var(--font-body);
   font-size: 13px;
   letter-spacing: 0.02em;
-  text-transform: none;
+  text-transform: uppercase;
   color: var(--accent);
-  margin: 1.4rem 0 0.7rem;
+  margin: 0 0 0.8rem;
+  font-weight: 700;
 }
 
-.categoryLabel:first-child {
-  margin-top: 0;
-}
-
-.item {
+.itemCard {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: stretch;
   gap: 12px;
-  padding: 0.9rem 0;
-  border-bottom: 1px solid var(--line);
+  padding: 0.8rem 0;
+  border-top: 1px solid rgba(18, 33, 63, 0.06);
+}
+
+.itemCard:first-of-type {
+  border-top: none;
+  padding-top: 0;
 }
 
 .itemMedia {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
+  width: 76px;
+  height: 76px;
+  border-radius: 18px;
   overflow: hidden;
   flex-shrink: 0;
   border: 1px solid var(--line);
@@ -191,20 +273,65 @@ a:focus-visible {
 .itemInfo {
   min-width: 0;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.itemTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
 }
 
 .itemName {
-  font-size: 15.5px;
-  font-weight: 600;
-  margin: 0 0 2px;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 4px;
   color: var(--chalk);
+}
+
+.itemDescription {
+  font-size: 12px;
+  color: var(--chalk-dim);
+  margin: 0;
+  line-height: 1.45;
 }
 
 .itemPrice {
   font-family: var(--font-body);
-  font-size: 12.5px;
+  font-size: 14px;
   color: var(--accent);
   margin: 0;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.itemMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.newBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(20, 61, 121, 0.12);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.newBadge.muted {
+  background: rgba(20, 61, 121, 0.08);
+  color: var(--chalk-dim);
 }
 
 .stepper {
@@ -215,8 +342,8 @@ a:focus-visible {
 }
 
 .stepBtn {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: 1px solid var(--line);
   background: #fff;
@@ -259,12 +386,12 @@ a:focus-visible {
   left: 50%;
   transform: translateX(-50%) translateY(0);
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
   padding: 0.9rem 1.25rem calc(0.9rem + env(safe-area-inset-bottom));
-  background: rgba(255, 253, 249, 0.96);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(12px);
   border-top: none;
-  box-shadow: 0 -10px 20px rgba(47, 33, 23, 0.05);
+  box-shadow: 0 -10px 24px rgba(18, 33, 63, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -290,7 +417,7 @@ a:focus-visible {
 }
 
 .cartBarBtn {
-  background: var(--accent);
+  background: var(--luxury);
   color: #fff;
   border: none;
   border-radius: 999px;

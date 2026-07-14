@@ -5,42 +5,103 @@
   "freeDeliveryOver": 8000,
   "sections": [
     {
-      "category": "Напитки",
+      "category": "Холодные напитки",
+      "items": [
+        {
+          "id": "ice1",
+          "name": "Iced Signature",
+          "price": 1800,
+          "description": "Кофе, ваниль, ледяной крем",
+          "image": "/images/americano.jpg",
+          "visible": true,
+          "isNew": false
+        },
+        {
+          "id": "tea1",
+          "name": "Фруктовый чай",
+          "price": 1400,
+          "description": "Черный чай, цитрус, мята",
+          "image": "/images/espresso.jpg",
+          "visible": true,
+          "isNew": false
+        }
+      ]
+    },
+    {
+      "category": "Горячие напитки",
+      "items": [
+        {
+          "id": "hot1",
+          "name": "Горячий шоколад",
+          "price": 2000,
+          "description": "Натуральный шоколад, сливки",
+          "image": "/images/cappuccino.jpg",
+          "visible": true,
+          "isNew": false
+        },
+        {
+          "id": "tea2",
+          "name": "Чай с бергамотом",
+          "price": 1300,
+          "description": "Ароматный черный чай",
+          "image": "/images/espresso.jpg",
+          "visible": true,
+          "isNew": false
+        }
+      ]
+    },
+    {
+      "category": "Кофе",
       "items": [
         {
           "id": "esp",
           "name": "Эспрессо",
           "price": 900,
-          "image": "/images/espresso.jpg"
-        },
-        {
-          "id": "ame",
-          "name": "Американо",
-          "price": 1000,
-          "image": "/images/americano.jpg"
+          "description": "Классический двойной экстракт",
+          "image": "/images/espresso.jpg",
+          "visible": true,
+          "isNew": true
         },
         {
           "id": "cap",
           "name": "Капучино",
           "price": 1300,
-          "image": "/images/cappuccino.jpg"
+          "description": "Сливочное молоко, бариста-эспрессо",
+          "image": "/images/cappuccino.jpg",
+          "visible": true,
+          "isNew": false
+        },
+        {
+          "id": "ame",
+          "name": "Американо",
+          "price": 1000,
+          "description": "Нежный вкус с мягкой кислотой",
+          "image": "/images/americano.jpg",
+          "visible": true,
+          "isNew": false
         }
       ]
     },
     {
-      "category": "Еда",
+      "category": "Кухня",
       "items": [
         {
           "id": "cro",
-          "name": "Круассан классический",
-          "price": 1200,
-          "image": "/images/croissant.jpg"
+          "name": "Круассан с лососем",
+          "price": 2200,
+          "description": "Сливочный сыр, лосось, зелень",
+          "image": "/images/croissant.jpg",
+          "visible": true,
+          "isNew": false
         },
         {
           "id": "san",
           "name": "Сэндвич с курицей",
           "price": 1900,
-          "image": "/images/sandwich.jpg"
+          "description": "Птица, томаты, сыр",
+          "image": "/images/sandwich.jpg",
+          "visible": true,
+          "isNew": false
         }
       ]
     }

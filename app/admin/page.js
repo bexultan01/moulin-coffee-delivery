@@ -60,7 +60,7 @@ export default function AdminPage() {
 
   function addItem(sectionIndex) {
     const next = { ...menu };
-    next.sections[sectionIndex].items.push({ id: `new-${Date.now()}`, name: "Новая позиция", price: 0, image: "/images/espresso.svg" });
+    next.sections[sectionIndex].items.push({ id: `new-${Date.now()}`, name: "Новая позиция", price: 0, description: "Состав", image: "/images/espresso.svg", visible: true, isNew: false });
     setMenu(next);
   }
 
@@ -171,6 +171,30 @@ export default function AdminPage() {
                 value={item.price}
                 type="number"
                 onChange={(e) => updateItem(sectionIndex, itemIndex, "price", Number(e.target.value))}
+                style={{ width: "100%", padding: 8, marginBottom: 8 }}
+              />
+              <div style={{ display: "flex", gap: 16, marginBottom: 8, flexWrap: "wrap" }}>
+                <label style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <input
+                    type="checkbox"
+                    checked={item.visible !== false}
+                    onChange={(e) => updateItem(sectionIndex, itemIndex, "visible", e.target.checked)}
+                  />
+                  Показывать
+                </label>
+                <label style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <input
+                    type="checkbox"
+                    checked={Boolean(item.isNew)}
+                    onChange={(e) => updateItem(sectionIndex, itemIndex, "isNew", e.target.checked)}
+                  />
+                  Новинка
+                </label>
+              </div>
+              <input
+                value={item.description || ""}
+                onChange={(e) => updateItem(sectionIndex, itemIndex, "description", e.target.value)}
+                placeholder="Состав или описание"
                 style={{ width: "100%", padding: 8, marginBottom: 8 }}
               />
               <input
