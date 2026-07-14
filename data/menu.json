@@ -1,0 +1,48 @@
+{
+  "shopName": "moulin coffee",
+  "shopAddress": "Рыскулова 178",
+  "deliveryFee": 800,
+  "freeDeliveryOver": 8000,
+  "sections": [
+    {
+      "category": "Напитки",
+      "items": [
+        {
+          "id": "esp",
+          "name": "Эспрессо",
+          "price": 900,
+          "image": "/images/espresso.jpg"
+        },
+        {
+          "id": "ame",
+          "name": "Американо",
+          "price": 1000,
+          "image": "/images/americano.jpg"
+        },
+        {
+          "id": "cap",
+          "name": "Капучино",
+          "price": 1300,
+          "image": "/images/cappuccino.jpg"
+        }
+      ]
+    },
+    {
+      "category": "Еда",
+      "items": [
+        {
+          "id": "cro",
+          "name": "Круассан классический",
+          "price": 1200,
+          "image": "/images/croissant.jpg"
+        },
+        {
+          "id": "san",
+          "name": "Сэндвич с курицей",
+          "price": 1900,
+          "image": "/images/sandwich.jpg"
+        }
+      ]
+    }
+  ]
+}

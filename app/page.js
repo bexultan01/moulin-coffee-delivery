@@ -125,6 +125,9 @@ export default function Home() {
               const qty = cart[item.id] || 0;
               return (
                 <div className={"item"} key={item.id}>
+                  <div className="itemMedia">
+                    <img src={item.image || "/images/espresso.svg"} alt={item.name} className="itemImage" />
+                  </div>
                   <div className={"itemInfo"}>
                     <p className={"itemName"}>{item.name}</p>
                     <p className={"itemPrice"}>{formatMoney(item.price)} ₸</p>
