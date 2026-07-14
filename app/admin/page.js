@@ -10,6 +10,7 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [menu, setMenu] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [uploadingIndex, setUploadingIndex] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -75,6 +76,27 @@ export default function AdminPage() {
     setMenu(next);
   }
 
+  async function uploadImage(sectionIndex, itemIndex, file) {
+    if (!file) return;
+    setUploadingIndex(`${sectionIndex}-${itemIndex}`);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      updateItem(sectionIndex, itemIndex, "image", data.url);
+    } else {
+      alert(data.error || "Не удалось загрузить фото");
+    }
+
+    setUploadingIndex(null);
+  }
+
   if (loading) return <div style={{ padding: 24 }}>Загрузка…</div>;
 
   if (!loggedIn) {
@@ -126,6 +148,15 @@ export default function AdminPage() {
                 placeholder="/images/название.svg"
                 style={{ width: "100%", padding: 8, marginBottom: 8 }}
               />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => uploadImage(sectionIndex, itemIndex, e.target.files?.[0])}
+                style={{ marginBottom: 8 }}
+              />
+              <div style={{ marginBottom: 8 }}>
+                {uploadingIndex === `${sectionIndex}-${itemIndex}` ? "Загрузка…" : "Выберите изображение с устройства"}
+              </div>
               <button onClick={() => removeItem(sectionIndex, itemIndex)}>Удалить</button>
             </div>
           ))}
