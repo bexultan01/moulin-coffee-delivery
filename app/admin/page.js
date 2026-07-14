@@ -76,6 +76,25 @@ export default function AdminPage() {
     setMenu(next);
   }
 
+  function moveSection(sectionIndex, direction) {
+    const next = { ...menu };
+    const target = sectionIndex + direction;
+    if (target < 0 || target >= next.sections.length) return;
+    const [moved] = next.sections.splice(sectionIndex, 1);
+    next.sections.splice(target, 0, moved);
+    setMenu(next);
+  }
+
+  function moveItem(sectionIndex, itemIndex, direction) {
+    const next = { ...menu };
+    const items = next.sections[sectionIndex].items;
+    const target = itemIndex + direction;
+    if (target < 0 || target >= items.length) return;
+    const [moved] = items.splice(itemIndex, 1);
+    items.splice(target, 0, moved);
+    setMenu(next);
+  }
+
   async function uploadImage(sectionIndex, itemIndex, file) {
     if (!file) return;
     setUploadingIndex(`${sectionIndex}-${itemIndex}`);
@@ -127,7 +146,19 @@ export default function AdminPage() {
 
       {menu?.sections?.map((section, sectionIndex) => (
         <section key={section.category + sectionIndex} style={{ marginBottom: 24, border: "1px solid #ddd", padding: 16, borderRadius: 12 }}>
-          <h2>{section.category}</h2>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 8 }}>
+            <input
+              value={section.category}
+              onChange={(e) => {
+                const next = { ...menu };
+                next.sections[sectionIndex].category = e.target.value;
+                setMenu(next);
+              }}
+              style={{ flex: 1, padding: 8 }}
+            />
+            <button onClick={() => moveSection(sectionIndex, -1)}>↑</button>
+            <button onClick={() => moveSection(sectionIndex, 1)}>↓</button>
+          </div>
           <button onClick={() => addItem(sectionIndex)}>Добавить позицию</button>
           {section.items.map((item, itemIndex) => (
             <div key={item.id} style={{ borderTop: "1px solid #eee", padding: "12px 0" }}>
@@ -157,7 +188,11 @@ export default function AdminPage() {
               <div style={{ marginBottom: 8 }}>
                 {uploadingIndex === `${sectionIndex}-${itemIndex}` ? "Загрузка…" : "Выберите изображение с устройства"}
               </div>
-              <button onClick={() => removeItem(sectionIndex, itemIndex)}>Удалить</button>
+              <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                <button onClick={() => moveItem(sectionIndex, itemIndex, -1)}>↑</button>
+                <button onClick={() => moveItem(sectionIndex, itemIndex, 1)}>↓</button>
+                <button onClick={() => removeItem(sectionIndex, itemIndex)}>Удалить</button>
+              </div>
             </div>
           ))}
         </section>
